@@ -17,7 +17,7 @@ def average_score(filename):
         cleaned_line=line.strip()
         if cleaned_line:
             parts=cleaned_line.split(",")
-            total+=int(parts[1])
+            total+=int(parts[1].strip())
             count+=1
     if count==0:
         return 0
@@ -34,7 +34,7 @@ def filter_passed(source, destination, pass_mark):
         cleaned_line=line.strip()
         if cleaned_line:
             parts=cleaned_line.split(",")
-            if int(parts[1])>=pass_mark:
+            if int(parts[1].strip())>=pass_mark:
                 file_out.write(cleaned_line + "\n")
                 passed_count+=1
     file_out.close()
@@ -55,17 +55,13 @@ def replace_word(filename, old_word, new_word):
 # Exercise 5
 def remove_line(filename, line_number):
     file=open(filename, "r")
-        lines=file.readlines()
-        file.close()
-    
-        if line_number<1 or line_number>len(lines):
-            return False
-    
-        del lines[line_number - 1]
-    
-        file=open(filename, "w")
-        for line in lines:
-            file.write(line)
-        file.close()
-    
-        return True
+    lines=file.readlines()
+    file.close()
+    if line_number<1 or line_number>len(lines):
+        return False
+    del lines[line_number - 1]
+    file=open(filename, "w")
+    for line in lines:
+        file.write(line)
+    file.close()
+    return True
